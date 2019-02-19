@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Hoa\\Fastcgi\\": "."
+            "Hoa\\Fastcgi\\": "Source"
         }
     },
     "extra": {
