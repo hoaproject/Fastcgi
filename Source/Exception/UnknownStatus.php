@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -39,11 +41,8 @@ namespace Hoa\Fastcgi\Exception;
 /**
  * Class \Hoa\Fastcgi\Exception\UnknownStatus.
  *
- * Extending the \Hoa\Fastcgi\Exception class.
+ * Extending the `Hoa\Fastcgi\Exception` class.
  * This happens when the response has an unknown status.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class UnknownStatus extends Exception
 {

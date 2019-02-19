@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -42,10 +44,7 @@ use Hoa\Exception as HoaException;
 /**
  * Class \Hoa\Fastcgi\Exception.
  *
- * Extending the \Hoa\Exception\Exception class.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * Extending the `Hoa\Exception\Exception` class.
  */
 class Exception extends HoaException
 {
@@ -54,4 +53,4 @@ class Exception extends HoaException
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\Fastcgi\Exception\Exception');
+Consistency::flexEntity(Exception::class);

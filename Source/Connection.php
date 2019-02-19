@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -43,9 +45,6 @@ namespace Hoa\Fastcgi;
  * Specification can be found here:
  * http://fastcgi.com/devkit/doc/fcgi-spec.html.
  * Inspired by PHP SAPI code: php://sapi/cgi/fastcgi.*.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 abstract class Connection
 {
@@ -102,13 +101,8 @@ abstract class Connection
 
     /**
      * Pack data to a packet.
-     *
-     * @param   int     $type       Packet's type.
-     * @param   string  $content    Content.
-     * @param   id      $id         Packet's ID.
-     * @return  string
      */
-    public function pack($type, $content, $id = 1)
+    public function pack(int $type, string $content, int $id = 1): string
     {
         $length = strlen($content);
 
@@ -126,11 +120,8 @@ abstract class Connection
 
     /**
      * Pack pairs (key/value).
-     *
-     * @param   array  $pairs    Keys/values array.
-     * @return  string
      */
-    public function packPairs(array $pairs)
+    public function packPairs(array $pairs): ?string
     {
         $out = null;
 
@@ -160,11 +151,8 @@ abstract class Connection
 
     /**
      * Unpack pairs (key/value).
-     *
-     * @param   string  $pack    Packet to unpack.
-     * @return  string
      */
-    public function unpackPairs($pack)
+    public function unpackPairs(string $pack): array
     {
         if (null === $length) {
             $length = strlen($pack);
@@ -203,8 +191,6 @@ abstract class Connection
 
     /**
      * Read a packet.
-     *
-     * @return  array
      */
     protected function readPack()
     {
@@ -243,9 +229,6 @@ abstract class Connection
 
     /**
      * Read data.
-     *
-     * @param   int     $length    Length of data to read.
-     * @return  string
      */
-    abstract protected function read($length);
+    abstract protected function read(int $length): string;
 }
