@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -37,16 +39,11 @@
 namespace Hoa\Fastcgi\Exception;
 
 /**
- * Class \Hoa\Fastcgi\Exception\CannotMultiplex.
+ * Class \Hoa\Fastcgi\Exception\UnknownStatus.
  *
- * Extending the \Hoa\Fastcgi\Exception class.
- * This happens when a Web server sends concurrent requests over one connection
- * to an application that is designed to process one request at a time per
- * connection.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * Extending the `Hoa\Fastcgi\Exception` class.
+ * This happens when the response has an unknown status.
  */
-class CannotMultiplex extends Exception
+class UnknownStatus extends Exception
 {
 }

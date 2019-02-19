@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -39,12 +41,9 @@ namespace Hoa\Fastcgi\Exception;
 /**
  * Class \Hoa\Fastcgi\Exception\UnknownRole.
  *
- * Extending the \Hoa\Fastcgi\Exception class.
+ * Extending the `Hoa\Fastcgi\Exception` class.
  * This happens when the Web server has specified a role that is unknown to the
  * application.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class UnknownRole extends Exception
 {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -43,9 +45,6 @@ use Hoa\Socket;
  *
  * A FastCGI client with a responder role.
  * Inspired by PHP SAPI code: php://sapi/cgi/fastcgi.*.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Responder extends Connection
 {
@@ -133,21 +132,21 @@ class Responder extends Connection
     /**
      * Client socket connection.
      *
-     * @var \Hoa\Socket\Client
+     * @var ?Socket\Client
      */
     protected $_client          = null;
 
     /**
      * Response's output.
      *
-     * @var string
+     * @var ?string
      */
     protected $_responseOutput  = null;
 
     /**
      * Response's error.
      *
-     * @var string
+     * @var ?string
      */
     protected $_responseError   = null;
 
@@ -162,8 +161,6 @@ class Responder extends Connection
 
     /**
      * Constructor.
-     *
-     * @param   \Hoa\Socket\Client  $client    Client connection.
      */
     public function __construct(Socket\Client $client)
     {
@@ -174,18 +171,8 @@ class Responder extends Connection
 
     /**
      * Send data on a FastCGI.
-     *
-     * @param   array   $headers    Headers.
-     * @param   string  $content    Content (e.g. key=value for POST).
-     * @return  string
-     * @throws  \Hoa\Socket\Exception
-     * @throws  \Hoa\Fastcgi\Exception
-     * @throws  \Hoa\Fastcgi\Exception\CannotMultiplex
-     * @throws  \Hoa\Fastcgi\Exception\Overloaded
-     * @throws  \Hoa\Fastcgi\Exception\UnknownRole
-     * @throws  \Hoa\Fastcgi\Exception\UnknownStatus
      */
-    public function send(array $headers, $content = null)
+    public function send(array $headers, ?string $content = null): string
     {
         $this->_responseOutput  = null;
         $this->_responseError   = null;
@@ -304,52 +291,40 @@ class Responder extends Connection
 
     /**
      * Get response content.
-     *
-     * @return  ?string
      */
-    public function getResponseContent()
+    public function getResponseContent(): ?string
     {
         return $this->_responseOutput;
     }
 
     /**
      * Get response error if any.
-     *
-     * @return  ?string
      */
-    public function getResponseError()
+    public function getResponseError(): ?string
     {
         return $this->_responseError;
     }
 
     /**
      * Get response headers.
-     *
-     * @return  array
      */
-    public function getResponseHeaders()
+    public function getResponseHeaders(): array
     {
         return $this->_responseHeaders;
     }
 
     /**
      * Read data.
-     *
-     * @param   int     $length    Length of data to read.
-     * @return  string
      */
-    protected function read($length)
+    protected function read(int $length): ?string
     {
         return $this->getClient()->read($length);
     }
 
     /**
      * Set client.
-     *
-     * @param   \Hoa\Socket\Client  $client    Client.
-     * @return  \Hoa\Socket\Client
      */
-    public function setClient(Socket\Client $client)
+    public function setClient(Socket\Client $client): ?Socket\Client
     {
         $old           = $this->_client;
         $this->_client = $client;
@@ -359,10 +334,8 @@ class Responder extends Connection
 
     /**
      * Get client.
-     *
-     * @return  \Hoa\Socket\Client
      */
-    public function getClient()
+    public function getClient(): Socket\Client
     {
         return $this->_client;
     }

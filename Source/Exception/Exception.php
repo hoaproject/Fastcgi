@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -36,15 +38,19 @@
 
 namespace Hoa\Fastcgi\Exception;
 
+use Hoa\Consistency;
+use Hoa\Exception as HoaException;
+
 /**
- * Class \Hoa\Fastcgi\Exception\UnknownStatus.
+ * Class \Hoa\Fastcgi\Exception.
  *
- * Extending the \Hoa\Fastcgi\Exception class.
- * This happens when the response has an unknown status.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * Extending the `Hoa\Exception\Exception` class.
  */
-class UnknownStatus extends Exception
+class Exception extends HoaException
 {
 }
+
+/**
+ * Flex entity.
+ */
+Consistency::flexEntity(Exception::class);

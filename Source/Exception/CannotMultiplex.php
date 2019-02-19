@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -36,22 +38,14 @@
 
 namespace Hoa\Fastcgi\Exception;
 
-use Hoa\Consistency;
-use Hoa\Exception as HoaException;
-
 /**
- * Class \Hoa\Fastcgi\Exception.
+ * Class \Hoa\Fastcgi\Exception\CannotMultiplex.
  *
- * Extending the \Hoa\Exception\Exception class.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * Extending the `Hoa\Fastcgi\Exception` class.
+ * This happens when a Web server sends concurrent requests over one connection
+ * to an application that is designed to process one request at a time per
+ * connection.
  */
-class Exception extends HoaException
+class CannotMultiplex extends Exception
 {
 }
-
-/**
- * Flex entity.
- */
-Consistency::flexEntity('Hoa\Fastcgi\Exception\Exception');
