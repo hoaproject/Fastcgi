@@ -1,3 +1,12 @@
+# 3.19.02.19
+
+  * fix(Exception) Add the `UnknownStatus` exception. (Ivan Enderlin, 2017-10-20T10:17:52+02:00)
+  * fix(Responder) Use `else if` instead of two `if`. (Ivan Enderlin, 2017-10-20T09:34:07+02:00)
+  * feat(Responder) Decorrelate error from output. (Ivan Enderlin, 2017-10-20T09:28:38+02:00)
+  * Pass stderr as reference (Florent Viel, 2017-10-18T16:08:27+02:00)
+  * Responder: Simplify a little bit the code. (Ivan Enderlin, 2017-06-26T14:42:54+02:00)
+  * Support for requests larger than 65535 bytes (Armen Baghumian, 2017-06-25T07:55:39+10:00)
+
 # 3.17.01.10
 
   * Quality: Happy new year! (Alexis von Glasow, 2017-01-09T21:37:36+01:00)
