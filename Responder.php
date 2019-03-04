@@ -291,15 +291,25 @@ class Responder extends Connection
         }
 
         $pos     = strpos($responseOutput, "\r\n\r\n");
-        $headers = substr($responseOutput, 0, $pos);
 
+        $this->buildResponseHeaders(substr($responseOutput, 0, $pos));
+
+        return $this->_responseOutput = substr($responseOutput, $pos + 4);
+    }
+
+    /**
+     * Build the response header array.
+     *
+     * @param  string  $headers  The response header string
+     * @return void
+     */
+    protected function buildResponseHeaders($headers)
+    {
         foreach (explode("\r\n", $headers) as $header) {
             $semicolon = strpos($header, ':');
             $this->_responseHeaders[strtolower(trim(substr($header, 0, $semicolon)))]
                 = trim(substr($header, $semicolon + 1));
         }
-
-        return $this->_responseOutput = substr($responseOutput, $pos + 4);
     }
 
     /**
