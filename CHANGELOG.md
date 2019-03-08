@@ -1,3 +1,7 @@
+# 3.19.03.08
+
+  * feat(responder) Parse HTTP response with a new `buildResponseHeaders` method. (Taylor Otwell, 2019-03-04T12:47:24+01:00)
+
 # 3.19.02.19
 
   * fix(Exception) Add the `UnknownStatus` exception. (Ivan Enderlin, 2017-10-20T10:17:52+02:00)
