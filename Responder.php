@@ -159,7 +159,7 @@ class Responder extends Connection
     protected $_responseHeaders = [];
 
     /**
-     * Response's output.
+     * Expected Header type.
      *
      * @var string
      */
