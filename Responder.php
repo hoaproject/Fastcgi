@@ -158,6 +158,12 @@ class Responder extends Connection
      */
     protected $_responseHeaders = [];
 
+    /**
+     * Response's output.
+     *
+     * @var string
+     */
+    protected $_multiHeader = false;
 
 
     /**
@@ -305,11 +311,28 @@ class Responder extends Connection
      */
     protected function buildResponseHeaders($headers)
     {
-        foreach (explode("\r\n", $headers) as $header) {
-            $semicolon = strpos($header, ':');
-            $this->_responseHeaders[strtolower(trim(substr($header, 0, $semicolon)))]
-                = trim(substr($header, $semicolon + 1));
+      if ($this->_multiHeader){
+        $HEADER_PATTERN = '#^([^\:]+):(.*)$#';
+        $lines  = explode( PHP_EOL, $headers );
+        foreach ($lines as $i => $line ){
+          if (preg_match($HEADER_PATTERN, $line, $matches )){
+            $key = trim( $matches[1]);
+            $key = str_replace('-', ' ', $key);
+            $key = ucwords($key);
+            $key = str_replace(' ', '-', $key);
+            if (!array_key_exists($key, $this->_responseHeaders)) $this->_responseHeaders[$key]= [];
+            $this->_responseHeaders[$key][] = trim($matches[2]);
+            continue;
+          }
+          break;
         }
+      }else{
+        foreach (explode("\r\n", $headers) as $header) {
+    $semicolon = strpos($header, ':');
+    $this->_responseHeaders[strtolower(trim(substr($header, 0, $semicolon)))]
+        = trim(substr($header, $semicolon + 1));
+      }
+      }
     }
 
     /**
@@ -341,6 +364,16 @@ class Responder extends Connection
     {
         return $this->_responseHeaders;
     }
+
+    /**
+     * Set Header type.
+     *
+     */
+    public function setMultiHeader($isMultiHeader)
+    {
+        $this->_multiHeader = $isMultiHeader;
+    }
+
 
     /**
      * Read data.
