@@ -109,8 +109,8 @@ We can get the headers from the executed file by calling the
 `Hoa\Fastcgi\Responder::getResponseHeaders` method.
 
 This is a good and fast way to execute PHP files (or other programs that support
-FastCGI) without worry about binaries location, sub-shells calls, errors
-handling etc.
+FastCGI) without worrying about binary locations, subshell calls, error
+handling, etc.
 
 ## Documentation
 
