@@ -159,11 +159,12 @@ class Responder extends Connection
     protected $_responseHeaders = [];
 
     /**
-     * Expected Header type.
+     * Whether multi headers are enabled. See the `self::enableMultiHeaders`
+     * method to learn more.
      *
-     * @var string
+     * @var bool
      */
-    protected $_multiHeader = false;
+    protected $_multiHeaders = false;
 
 
     /**
@@ -311,28 +312,24 @@ class Responder extends Connection
      */
     protected function buildResponseHeaders($headers)
     {
-      if ($this->_multiHeader){
-        $HEADER_PATTERN = '#^([^\:]+):(.*)$#';
-        $lines  = explode( PHP_EOL, $headers );
-        foreach ($lines as $i => $line ){
-          if (preg_match($HEADER_PATTERN, $line, $matches )){
-            $key = trim( $matches[1]);
-            $key = str_replace('-', ' ', $key);
-            $key = ucwords($key);
-            $key = str_replace(' ', '-', $key);
-            if (!array_key_exists($key, $this->_responseHeaders)) $this->_responseHeaders[$key]= [];
-            $this->_responseHeaders[$key][] = trim($matches[2]);
-            continue;
-          }
-          break;
-        }
-      }else{
+        $multiHeaders = $this->_multiHeaders;
+
         foreach (explode("\r\n", $headers) as $header) {
-    $semicolon = strpos($header, ':');
-    $this->_responseHeaders[strtolower(trim(substr($header, 0, $semicolon)))]
-        = trim(substr($header, $semicolon + 1));
-      }
-      }
+            $semicolon = strpos($header, ':');
+
+            $headerName = strtolower(trim(substr($header, 0, $semicolon)));
+            $headerValue = trim(substr($header, $semicolon + 1));
+
+            if (false === $multiHeaders) {
+                $this->_responseHeaders[$headerName] = $headerValue;
+            } else {
+                if (!isset($this->_responseHeaders[$headerName])) {
+                    $this->_responseHeaders[$headerName] = [];
+                }
+
+                $this->_responseHeaders[$headerName][] = $headerValue;
+            }
+        }
     }
 
     /**
@@ -366,14 +363,36 @@ class Responder extends Connection
     }
 
     /**
-     * Set Header type.
+     * Enable multi-headers, i.e. header values will be an array representing
+     * all values of the multiple headers with the same name, e.g. the
+     * following HTTP headers:
      *
+     * ```http
+     * Foo: Bar
+     * Foo: Baz
+     * ```
+     *
+     * will produce:
+     *
+     * ```php
+     * ['Foo' => 'Baz']
+     * ```
+     *
+     * when multi-headers are disabled (the default), i.e. only the last
+     * header value will be stored, or, it will produce:
+     *
+     * ```php
+     * ['Foo' => ['Bar', 'Baz']]
+     * ```
+     *
+     * when multi-headers are enabled.
+     *
+     * @return  void
      */
-    public function setMultiHeader($isMultiHeader)
+    public function enableMultiHeaders($enable = true)
     {
-        $this->_multiHeader = $isMultiHeader;
+        $this->_multiHeaders = $enable;
     }
-
 
     /**
      * Read data.
